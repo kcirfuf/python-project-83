@@ -44,7 +44,7 @@ def url_detail(id):
         app.logger.error(f'Database error: {str(e)}')
         abort(500)
     finally:
-        release_db(conn)
+        conn.close()
 
 @app.route('/urls', methods=['POST'])
 def add_url():
