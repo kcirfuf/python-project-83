@@ -38,7 +38,7 @@ def url_detail(id):
             cur.execute('SELECT * FROM urls WHERE id = %s', (id,))
             url = cur.fetchone()
 
-        return render_template('detail.html', url=url) if url else abort(404)
+        return render_template('url_detail.html', url=url) if url else abort(404)
 
     except psycopg2.Error as e:
         app.logger.error(f'Database error: {str(e)}')
@@ -87,3 +87,4 @@ def validate_url(url):
     elif not validators.url(url):
         errors['name'] = 'Некорректный URL'
     return errors
+
