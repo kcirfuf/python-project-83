@@ -49,10 +49,10 @@ def url_detail(id):
 @app.route('/urls', methods=['POST'])
 def add_url():
     raw_url = request.form.get('url', '').strip()
-    errors = validate_url(raw_url)
-    if errors:
-        flash(errors['name'], 'danger')
-        return render_template('index.html', url=raw_url, errors=errors), 422
+    error = validate_url(raw_url)  # Изменено на error вместо errors
+    if error:
+        flash(error, 'danger')
+        return render_template('index.html', url=raw_url), 422
 
     parsed_url = urlparse(raw_url)
     normalized_url = f'{parsed_url.scheme}://{parsed_url.netloc}'
@@ -79,12 +79,11 @@ def add_url():
         conn.close()
 
 def validate_url(url):
-    errors = {}
     if not url:
-        errors['name'] = 'URL обязателен'
-    elif len(url) > 255:
-        errors['name'] = 'URL превышает 255 символов'
-    elif not validators.url(url):
-        errors['name'] = 'Некорректный URL'
-    return errors
+        return 'URL обязателен'
+    if len(url) > 255:
+        return 'URL превышает 255 символов'
+    if not validators.url(url):
+        return 'Некорректный URL'
+    return None
 
