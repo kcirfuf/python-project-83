@@ -13,7 +13,7 @@ build:
 
 PORT ?= 8000
 render-start:
-	gunicorn -w 5 -b 0.0.0.0:$(PORT) page_analyzer:app
+    pipenv run gunicorn -w 5 -b 0.0.0.0:$(PORT) page_analyzer:app
 
 check:
 	uv run ruff check .
