@@ -12,7 +12,7 @@ build:
 	./build.sh
 
 render-start:
-	/Users/sergey/python-project-83/.venv/bin/gunicorn -w 5 -b 0.0.0.0:$(PORT) page_analyzer:app
+	.venv/bin/gunicorn -w 5 -b 0.0.0.0:$(PORT) page_analyzer:app
 
 check:
 	uv run ruff check .
